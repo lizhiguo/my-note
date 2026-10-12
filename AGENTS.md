@@ -19,7 +19,7 @@
 ### 1.2 Agent 基础设施域 (`wiki/schema/`)
 本仓库所有可复用的 AI 工具资产集中在 `wiki/schema/` 下，会随业务需求不断迭代：
 - **`wiki/schema/commands/`**：斜杠命令定义（如 `extract-note.md`、`quick-note.md`）。供各 IDE/终端环境挂载使用。
-- **`wiki/schema/skills/`**：独立技能包（如 `okf-wiki/`、`diagram/`）。每个技能包含独立的 `SKILL.md`，可自选携带 `scripts/` 或 `references/`。
+- **`wiki/schema/skills/`**：独立技能包（如 `okf-wiki/`、`diagram-driven/`）。每个技能包含独立的 `SKILL.md`，可自选携带 `scripts/` 或 `references/`。
 - **`wiki/schema/agents/`**：专有子 Agent 角色设定与系统 Prompt（如架构评审 Agent、代码审计 Agent）。
 - **`wiki/schema/guides/`**：全局渲染与规范协议（如 `PlantUML绘图风格指南.md`、`Mermaid绘图风格指南.md`）。
 

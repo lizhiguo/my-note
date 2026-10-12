@@ -344,6 +344,9 @@ def check_file(path, bundle_root, rel):
 
     reserved = os.path.basename(path) in RESERVED
     is_schema = rel in SCHEMA_FILES
+    # wiki/schema/ 是 Agent 基础设施域（commands/skills/agents/guides），
+    # 遵循自身工具契约，不是 OKF 知识概念页，豁免 frontmatter 校验。
+    in_schema_infra = rel.startswith("wiki/schema/")
     # sources/ 是 LLM-Wiki 的不可变原始层：OKF 合规要求针对概念页，
     # 原始资料保持原样（且不允许改写），因此不做 frontmatter 校验。
     in_sources = rel.startswith("sources/")
@@ -352,14 +355,16 @@ def check_file(path, bundle_root, rel):
     # references/ 是外部资料与规范原文的镜像，不是本库产出的知识页。
     # 它们本身可能包含 v0.1 遗留写法（规范原文即如此），不该按 OKF 合规判定。
     in_reference = rel.startswith("references/")
+    # AGENTS.md 是仓库指引手册，不是概念页
+    is_root_agent_doc = rel == "AGENTS.md"
 
     ok, fm, raw, body, err = parse_frontmatter(text)
     if not ok:
-        if reserved or is_schema or in_template or in_reference:
+        if reserved or is_schema or in_template or in_reference or in_schema_infra or is_root_agent_doc:
             # index.md 允许无 frontmatter（bundle 根可带 okf_version）
-            # schema 文件（索引/日志/指南）不是概念页，同样豁免
+            # schema 文件（索引/日志/指南）及基础设施文件不是概念页，同样豁免
             return [], {"rel": rel, "body": body, "fm": {}, "reserved": reserved,
-                        "schema": is_schema}
+                        "schema": is_schema or in_schema_infra or is_root_agent_doc}
         if in_sources:
             return [], {"rel": rel, "body": body, "fm": {}, "reserved": False,
                         "in_sources": True}
@@ -368,7 +373,7 @@ def check_file(path, bundle_root, rel):
         return issues, {"rel": rel, "body": body, "fm": {}, "reserved": False}
 
     info = {"rel": rel, "body": body, "fm": fm, "reserved": reserved,
-            "raw": raw, "in_sources": in_sources, "schema": is_schema,
+            "raw": raw, "in_sources": in_sources, "schema": is_schema or in_schema_infra or is_root_agent_doc,
             "template": in_template, "reference": in_reference}
 
     if reserved:
@@ -379,7 +384,7 @@ def check_file(path, bundle_root, rel):
                        % ", ".join(sorted(set(fm) - {"okf_version"}))})
         return issues, info
 
-    if in_sources or is_schema or in_template or in_reference:
+    if in_sources or is_schema or in_template or in_reference or in_schema_infra or is_root_agent_doc:
         return issues, info
 
     # 合规：必须有非空 type
@@ -658,7 +663,8 @@ def check_index_coverage(infos, bundle_root):
     issues = defaultdict(list)
     for rel, info in infos.items():
         if (info.get("reserved") or info.get("schema") or info.get("template")
-                or rel.startswith("sources/") or rel.startswith("references/")):
+                or rel.startswith("sources/") or rel.startswith("references/")
+                or rel.startswith("wiki/schema/") or rel == "AGENTS.md"):
             continue
         stem = os.path.basename(rel)[:-3]
         if stem.lower() not in blob_l and rel.lower() not in blob_l:
