@@ -1,0 +1,92 @@
+# ============================================
+# 1. Windows 系统文件 (保留原有模板)
+# ============================================
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# ============================================
+# 2. JetBrains IDE (IntelliJ IDEA / WebStorm 等)
+# ============================================
+# 忽略整个 .idea 文件夹（包含工作区配置、字典等）
+.idea/
+
+# 忽略所有 .iml 模块文件（这些通常由 IDE 自动生成）
+*.iml
+
+# 忽略特定的项目配置文件（如果不需要共享运行配置）
+# *.iws
+# *.ipr
+out/
+target/
+
+# ============================================
+# 3. Obsidian 知识库配置
+# ============================================
+# 核心策略：忽略本地 UI 状态，保留插件列表以便多端同步
+
+# 忽略整个 .obsidian 文件夹作为默认行为
+.obsidian/*
+
+# 【白名单】重新包含需要共享的插件配置文件
+# 这样在新设备 clone 后，打开 Obsidian 会自动提示安装相同的插件
+!.obsidian/community-plugins.json
+!.obsidian/core-plugins.json
+!.obsidian/plugins.json
+
+# 【黑名单】明确忽略不应共享的本地状态文件
+# 工作区布局（每个人打开的标签页不同）
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# 应用外观与热键（个人偏好）
+.obsidian/appearance.json
+.obsidian/hotkeys.json
+.obsidian/app.json
+
+# 图谱视图状态
+.obsidian/graph.json
+
+# 类型定义缓存
+.obsidian/types.json
+
+# 插件本体和主题文件（体积大且随版本更新快，建议通过 JSON 配置自动安装）
+.obsidian/plugins/
+.obsidian/themes/
+.obsidian/snippets/
+
+# ============================================
+# 4. 其他常见忽略项
+# ============================================
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 日志备份文件
+*.log.bak
+*.tmp
+
+# Node modules (如果未来涉及前端开发)
+node_modules/
