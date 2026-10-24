@@ -90,3 +90,10 @@ target/
 
 # Node modules (如果未来涉及前端开发)
 node_modules/
+
+# ============================================
+# 5. OpenWiki 派生投影（单向生成，勿手工编辑）
+# ============================================
+# 由 sync_openwiki_to_vault.py 从 ~/.openwiki/wiki 生成。
+# 不纳入 git：随时可删可重建。
+openwiki-brain/

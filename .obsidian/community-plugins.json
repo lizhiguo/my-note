@@ -1,4 +1,6 @@
 [
   "obsidian-git",
-  "shiki-highlighter"
+  "shiki-highlighter",
+  "editing-toolbar",
+  "dataview"
 ]
