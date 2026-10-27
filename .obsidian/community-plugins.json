@@ -2,5 +2,7 @@
   "obsidian-git",
   "shiki-highlighter",
   "editing-toolbar",
-  "dataview"
+  "dataview",
+  "home-pages",
+  "notion-block"
 ]
